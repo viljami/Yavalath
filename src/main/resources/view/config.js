@@ -12,5 +12,4 @@ export const options = [
   ...toggleOptions
 ]
 
-
 export const playerColors = ['#ff1d5c', '#22a1e4'];

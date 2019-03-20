@@ -47,7 +47,11 @@ public class Referee extends AbstractReferee {
                 validActions.add(lastAction);
 
             if(!validActions.contains(action)) {
-                gameManager.addToGameSummary(String.format("Player %s played an illegal action (%d %d).", action.player.getNicknameToken(), action.row, action.col));
+                if(action.row >= 0 && action.col >= 0 && action.col <= 8 && action.row < hexGrid.hexagons.get(action.col).size()) {
+                    gameManager.addToGameSummary(String.format("Player %s played an illegal action (%d %d). Cell was occupied.", action.player.getNicknameToken(), action.row, action.col));
+                } else {
+                    gameManager.addToGameSummary(String.format("Player %s played an illegal action (%d %d). Out of bounds move.", action.player.getNicknameToken(), action.row, action.col));
+                }
                 throw new InvalidAction("Invalid action.");
             } else {
                 gameManager.addToGameSummary(String.format("Player %s played (%d %d).", action.player.getNicknameToken(), action.row, action.col));
@@ -106,7 +110,17 @@ public class Referee extends AbstractReferee {
             String text = "";
             for (int s : hexGrid.hexagons.get(i))
             {
-                text += s;
+                if(player.getIndex() == 0) {
+                    text += s;
+                } else {
+                    if(s == 1) {
+                        text += 2;
+                    } else if(s == 2) {
+                        text += 1;
+                    } else {
+                        text += 0;
+                    }
+                }
             }
             player.sendInputLine(text);
         }

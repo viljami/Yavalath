@@ -6,10 +6,7 @@ import java.util.List;
 import com.codingame.game.Action;
 import com.codingame.game.Player;
 import com.codingame.gameengine.core.GameManager;
-import com.codingame.gameengine.module.entities.GraphicEntityModule;
-import com.codingame.gameengine.module.entities.Group;
-import com.codingame.gameengine.module.entities.Polygon;
-import com.codingame.gameengine.module.entities.Text;
+import com.codingame.gameengine.module.entities.*;
 import com.codingame.gameengine.module.tooltip.TooltipModule;
 
 import view.toggle.ToggleModule;
@@ -21,6 +18,7 @@ public class View {
 
     private List<List<Polygon>> hexagonsList = new ArrayList<>();
     private static Text[] moves = new Text[2];
+    private List<List<Line>> tempLines = new ArrayList<>();
 
     private Polygon createHex(GraphicEntityModule graphics, double radius, int centerX, int centerY, int row) {
         Polygon hex = graphics.createPolygon();
@@ -30,7 +28,7 @@ public class View {
             int y = (int)(centerY + radius * Math.sin((1 + i * 2) * Math.PI / 6D));
             hex.addPoint(x, y);
         }
-        hex.setFillColor(0xE7BA7B).setLineWidth(1).setLineColor(0x000000).setZIndex(0);
+        hex.setFillColor(0xE7BA7B).setLineWidth(5).setLineColor(0x000000).setZIndex(0);
 
         return hex;
     };
@@ -49,10 +47,12 @@ public class View {
         // Generates hex grid
         for(int h = 0; h < 9; ++h) {
             hexagonsList.add(h, new ArrayList<>());
+            tempLines.add(h, new ArrayList<>());
             for(int c = 0; c < counter; ++c) {
                 hexagonsList.get(h).add(c, createHex(graphics, radius, centerX, centerY, c));
                 tooltips.setTooltipText(hexagonsList.get(h).get(c), c + " " + h);
-                texts.add(graphics.createText(c + "  " + h).setX(centerX + (int)(radius * 1.75 * c) - 20).setY(centerY - 12));
+                texts.add(graphics.createText(c + "  " + h).setX(centerX + (int)(radius * 1.75 * c) - 32).setY(centerY - 20).setFontSize(40));
+                tempLines.get(h).add(graphics.createLine().setX(centerX + 56 + (int)(radius * 1.75 * c)).setX2(centerX + 56 + (int)(radius * 1.75 * c)).setY(centerY - 33).setY2(centerY + 32).setLineColor(0x000000).setZIndex(5).setLineWidth(5));
             }
             if(h < 4) {
                 centerX -= radius * 0.875;
@@ -65,7 +65,6 @@ public class View {
             }
         }
         toggle.displayOnToggleState(texts, "debugToggle", true);
-
         DrawPlayers(graphics, players);
     }
 
@@ -74,21 +73,25 @@ public class View {
         if(player.getIndex() == 1) {
             centerX = 1542;
         }
+
         graphics.createText(player.getNicknameToken())
-                .setX(centerX)
-                .setY(352)
-                .setFontSize(60).setFontFamily("Roboto").setFontWeight(Text.FontWeight.BOLD);
+                .setX(centerX - 50)
+                .setY(50)
+                .setFontSize(40).setFontFamily("Roboto").setFontWeight(Text.FontWeight.BOLD);
 
         graphics.createSprite()
                 .setImage(player.getAvatarToken())
                 .setX(centerX)
                 .setY(130)
-                .setScale(1.75);
+                .setBaseWidth(200)
+                .setBaseHeight(200);
 
         Polygon poly = createHex(graphics, 200, 103 + centerX, 800, 0);
-        poly.setFillColor(player.getColorToken()).setZIndex(1);
+        poly.setFillColor(player.getColorToken()).setZIndex(1).setLineWidth(0);
+        Polygon poly2 = createHex(graphics, 210, 103 + centerX, 800, 0);
+        poly2.setFillColor(0x000000).setZIndex(0).setLineWidth(0);
 
-        moves[player.getIndex()] = graphics.createText("").setY(725).setX(centerX-12).setZIndex(2).setFontSize(150).setFontWeight(Text.FontWeight.BOLD);
+        moves[player.getIndex()] = graphics.createText("").setY(722).setX(centerX-12).setZIndex(2).setFontSize(150).setFontWeight(Text.FontWeight.BOLD);
     }
 
     private void DrawPlayers(GraphicEntityModule graphics, List<Player> players) {
@@ -122,13 +125,15 @@ public class View {
                         }
                     }
                     if(!found) {
-                        hexagonsList.get(h).get(i).setAlpha(0.4).setLineAlpha(0.4);
+                        tempLines.get(h).get(i).setLineAlpha(0);
+                        hexagonsList.get(h).get(i).setAlpha(0.35).setLineAlpha(0);
                     }
                 }
             }
         } else {
             for(Action a : neighbours) {
-                hexagonsList.get(a.col).get(a.row).setAlpha(0.2);
+                tempLines.get(a.col).get(a.row).setLineAlpha(0);
+                hexagonsList.get(a.col).get(a.row).setAlpha(0.35).setLineAlpha(0);
             }
         }
     }

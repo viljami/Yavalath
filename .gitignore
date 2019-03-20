@@ -20,3 +20,7 @@ target/test-classes/Agent2.class
 target/test-classes/log4j2.properties
 target/test-classes/Main.class
 target/test-classes/META-INF/Yavalath.kotlin_module
+target/classes/view/toggle-module/errors/MissingToggleError.js
+target/classes/view/toggle-module/ToggleModule.js
+target/classes/view/toggle/ToggleModule$Toggle.class
+target/classes/view/toggle/ToggleModule.class
