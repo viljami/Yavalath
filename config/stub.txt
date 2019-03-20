@@ -1,0 +1,6 @@
+read myID:int
+gameloop
+read count:int
+loop count read line:word(11)
+read opponentX:int opponentY:int
+write 0 0
