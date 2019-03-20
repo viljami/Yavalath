@@ -45,6 +45,9 @@ public class Referee extends AbstractReferee {
         try {
             final Action action = player.getAction();
             List<Action> validActions = hexGrid.getValidActions();
+            if(turn == 1)
+                validActions.add(lastAction);
+
             if(!validActions.contains(action)) {
                 gameManager.addToGameSummary(String.format("Player %s played an illegal action (%d %d).", action.player.getNicknameToken(), action.row, action.col));
                 throw new InvalidAction("Invalid action.");

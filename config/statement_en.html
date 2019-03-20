@@ -1,111 +1,122 @@
 <div style="color:#18d8b8;background-color:rgba(187, 135, 87, 0.1);padding:20px;margin-right:15px;margin-left:15px;margin-bottom:10px;text-align:left">This is a port from the board game <a href="http://cambolbro.com/games/yavalath/">Yavalath</a></div>
 <div class="statement-body">
-  <!-- GOAL -->
-  <div class="statement-section statement-goal">
+<!-- GOAL -->
+<div class="statement-section statement-goal">
     <h1>
-      <span class="icon icon-goal">&nbsp;</span>
-      <span>The Goal</span>
+        <span class="icon icon-goal">&nbsp;</span>
+        <span>The Goal</span>
     </h1>
     <div class="statement-goal-content">
-      The goal of the game is to make a line of 4 without making a line of 3 beforehand.<br>
-      Click <a href="http://cambolbro.com/games/yavalath/">here</a> or <a href="https://boardgamegeek.com/blogpost/2814/yavalath-evolutionary-game-design">here</a> for more detailed rules for more detailed rules
-      <br>
+        The goal of the game is to make a line of 4 without making a line of 3 beforehand.<br>
+        Click <a href="http://cambolbro.com/games/yavalath/">here</a> or <a href="https://boardgamegeek.com/blogpost/2814/yavalath-evolutionary-game-design">here</a> for more detailed rules for more detailed rules
+        <br>
     </div>
-  </div>
-  <!-- RULES -->
-  <div class="statement-section statement-rules">
+</div>
+<!-- RULES -->
+<div class="statement-section statement-rules">
     <h1>
-      <span class="icon icon-rules">&nbsp;</span>
-      <span>Rules</span>
+        <span class="icon icon-rules">&nbsp;</span>
+        <span>Rules</span>
     </h1>
     <div>
-      <div class="statement-rules-content">
-          <strong>Grid: </strong><br> Game is played on an hex grid. Grid size will always remain the same.<br>
+        <div class="statement-rules-content">
+            <strong>Grid: </strong><br> Game is played on an hex grid. Grid size will always remain the same.<br>
 
-          <strong>Resolution of a turn: </strong><br> A bot must output the coordinates of the hexagon that he wants to play. Once the output is done, the hexagon at those coordinates will be filled.<br><br>
-          <strong>Output</strong><br> If the coordinates:
+            <strong>Resolution of a turn: </strong><br> A bot must output the coordinates of the hexagon that he wants to play. Once the output is done, the hexagon at those coordinates will be filled.<br><br>
+            <strong>Output</strong><br> If the coordinates:
             <ul>
                 <li>Are outside of Hex grid, the game will end and the other player will win.</li>
                 <li>Are inside but the hexagon at those coordinates is already filled, the game will end and the other player will win.</li>
                 <li>If those coordinates result in a line of 4, than the player win.</li>
                 <li>If those coordinates result in a line of 3, than the other player win.</li>
             </ul>
+        </div>
     </div>
-  </div>
-  <!-- Victory conditions -->
-  <div class="statement-victory-conditions">
-      <div class="icon victory"></div>
-      <div class="blk">
-          <div class="title">Victory Conditions</div>
-          <div class="text">
-              <ul style="padding-bottom: 0;">
-                  <li>
-                      Make a line of 4 before making a line of 3 beforehand.
-                  </li>
-              </ul>
-          </div>
-      </div>
-  </div>
-  <!-- Lose conditions -->
-  <div class="statement-lose-conditions">
-      <div class="icon lose"></div>
-      <div class="blk">
-          <div class="title">Loss Conditions</div>
-          <div class="text">
-              <ul style="padding-bottom: 0;">
-                  <li>
-                      Make a line of 3.
-                  </li>
-                  <li>
-                      You do not respond in time or output an unrecognized command.
-                  </li>
-              </ul>
-          </div>
-      </div>
-  </div>
-
-  <!-- PROTOCOL -->
-  <div class="statement-section statement-protocol">
-    <h1>
-      <span class="icon icon-protocol">&nbsp;</span>
-      <span>Game Input</span>
-    </h1>
-
-    <!-- Protocol block -->
-    <div class="blk">
-      <div class="title">Initial input</div>
-      <div class="text">
-        <span class="statement-lineno">First line</span>: The id of the player(<var>myId</var>)
-      </div>
-      <div class="title">Input for one game turn</div>
-      <div class="text">
-          <span class="statement-lineno">First line</span>: <var>count</var>: the number of columns on hex grid.
-          <br>
-          <span class="statement-lineno">Next <var>count</var> lines</span>: each row of the grid as a string.
-          <br>
-          <span class="statement-lineno">Next <var>opponentX</var></span>: the x coordinate of opponent move.
-          <br>
-          <span class="statement-lineno">Next <var>opponentY</var></span>: the y coordinate of opponent move.
-          <br>
-      </div>
+    <!-- EXPERT RULES -->
+    <div class="statement-section statement-expertrules">
+        <h1>
+            <span class="icon icon-expertrules">&nbsp;</span>
+            <span>Expert Rules</span>
+        </h1>
+        <div class="statement-expert-rules-content">
+            Player 2 might choose to replace first opponent move by his own, if is his first turn.<br>
+            Github repo can be found <a href="https://github.com/MultiStruct/Yavalath/">here</a>.
+        </div>
+    </div>
+    <!-- Victory conditions -->
+    <div class="statement-victory-conditions">
+        <div class="icon victory"></div>
+        <div class="blk">
+            <div class="title">Victory Conditions</div>
+            <div class="text">
+                <ul style="padding-bottom: 0;">
+                    <li>
+                        Make a line of 4 before making a line of 3 beforehand.
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- Lose conditions -->
+    <div class="statement-lose-conditions">
+        <div class="icon lose"></div>
+        <div class="blk">
+            <div class="title">Loss Conditions</div>
+            <div class="text">
+                <ul style="padding-bottom: 0;">
+                    <li>
+                        Make a line of 3.
+                    </li>
+                    <li>
+                        You do not respond in time or output an unrecognized command.
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
 
-    <!-- Protocol block -->
-    <div class="blk">
-      <div class="title">Output</div>
-      <div class="text">
-        <span class="statement-lineno">A single line</span> containing the coordinates you want to play. Example "4 4".
-        <br>
-      </div>
+    <!-- PROTOCOL -->
+    <div class="statement-section statement-protocol">
+        <h1>
+            <span class="icon icon-protocol">&nbsp;</span>
+            <span>Game Input</span>
+        </h1>
+
+        <!-- Protocol block -->
+        <div class="blk">
+            <div class="title">Initial input</div>
+            <div class="text">
+                <span class="statement-lineno">First line</span>: The id of the player(<var>myId</var>)
+            </div>
+            <div class="title">Input for one game turn</div>
+            <div class="text">
+                <span class="statement-lineno">First line</span>: <var>count</var>: the number of columns on hex grid.
+                <br>
+                <span class="statement-lineno">Next <var>count</var> lines</span>: each row of the grid as a string.
+                <br>
+                <span class="statement-lineno">Next <var>opponentX</var></span>: the x coordinate of opponent move.
+                <br>
+                <span class="statement-lineno">Next <var>opponentY</var></span>: the y coordinate of opponent move.
+                <br>
+            </div>
+        </div>
+
+        <!-- Protocol block -->
+        <div class="blk">
+            <div class="title">Output</div>
+            <div class="text">
+                <span class="statement-lineno">A single line</span> containing the coordinates you want to play. Example "4 4".
+                <br>
+            </div>
+        </div>
+
+        <!-- Protocol block -->
+        <div class="blk">
+            <div class="title">Constraints</div>
+            Response time first turn is ≤
+            <const>1000</const> ms.
+            <br>Response time per turn is ≤
+            <const>100</const> ms.
+        </div>
     </div>
-    
-    <!-- Protocol block -->
-    <div class="blk">
-      <div class="title">Constraints</div>
-        Response time first turn is ≤
-        <const>1000</const> ms.
-        <br>Response time per turn is ≤
-        <const>100</const> ms.
-    </div>
-  </div>
 </div>
