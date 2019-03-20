@@ -3,17 +3,15 @@ import java.util.List;
 
 import com.codingame.gameengine.core.AbstractPlayer.TimeoutException;
 import com.codingame.gameengine.core.AbstractReferee;
-import com.codingame.gameengine.core.MultiplayerGameManager;
 import com.codingame.gameengine.core.GameManager;
-import com.codingame.gameengine.core.Tooltip;
+import com.codingame.gameengine.core.MultiplayerGameManager;
+import com.codingame.gameengine.module.endscreen.EndScreenModule;
 import com.codingame.gameengine.module.entities.GraphicEntityModule;
 import com.codingame.gameengine.module.tooltip.TooltipModule;
-import com.codingame.gameengine.module.toggle.ToggleModule;
-import com.codingame.gameengine.module.endscreen.EndScreenModule;
-
 import com.google.inject.Inject;
 
 import view.View;
+import view.toggle.ToggleModule;
 
 public class Referee extends AbstractReferee {
 
