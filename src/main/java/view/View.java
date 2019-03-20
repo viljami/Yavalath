@@ -11,7 +11,8 @@ import com.codingame.gameengine.module.entities.Group;
 import com.codingame.gameengine.module.entities.Polygon;
 import com.codingame.gameengine.module.entities.Text;
 import com.codingame.gameengine.module.tooltip.TooltipModule;
-import com.codingame.gameengine.module.toggle.ToggleModule;
+
+import view.toggle.ToggleModule;
 
 public class View {
     // Constants
