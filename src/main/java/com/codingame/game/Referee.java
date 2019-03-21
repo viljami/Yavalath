@@ -36,29 +36,28 @@ public class Referee extends AbstractReferee {
     @Override
     public void gameTurn(int turn) {
         Player player = gameManager.getPlayer(turn % gameManager.getPlayerCount());
-
         sendInputs(player, turn);
         player.execute();
-
         try {
             final Action action = player.getAction();
             List<Action> validActions = hexGrid.getValidActions();
+
+            view.DrawMessage(graphicEntityModule, player);
+
             if(turn == 1)
                 validActions.add(lastAction);
 
             if(!validActions.contains(action)) {
                 if(action.row >= 0 && action.col >= 0 && action.col <= 8 && action.row < hexGrid.hexagons.get(action.col).size()) {
-                    gameManager.addToGameSummary(String.format("Player %s played an illegal action (%d %d). Cell was occupied.", action.player.getNicknameToken(), action.row, action.col));
+                    throw new InvalidAction(String.format("Player %s played an illegal action (%d %d). Cell was occupied.", action.player.getNicknameToken(), action.row, action.col));
                 } else {
-                    gameManager.addToGameSummary(String.format("Player %s played an illegal action (%d %d). Out of bounds move.", action.player.getNicknameToken(), action.row, action.col));
+                    throw new InvalidAction(String.format("Player %s played an illegal action (%d %d). Out of bounds move.", action.player.getNicknameToken(), action.row, action.col));
                 }
-                throw new InvalidAction("Invalid action.");
             } else {
                 gameManager.addToGameSummary(String.format("Player %s played (%d %d).", action.player.getNicknameToken(), action.row, action.col));
             }
 
             lastAction = action;
-
             int result = hexGrid.MakeAction(action, player);
             if(result >= 4) { // Player wins
                 gameManager.addToGameSummary(String.format("Player %s has made a line of 4.", action.player.getNicknameToken()));
@@ -81,20 +80,25 @@ public class Referee extends AbstractReferee {
                 endGame();
             }
         } catch (NumberFormatException e) {
+            gameManager.addToGameSummary(GameManager.formatErrorMessage(player.getNicknameToken() + " did not output a number!"));
+            gameManager.addToGameSummary(GameManager.formatErrorMessage("Action was: " + player.GetActionOutput()));
             player.deactivate("Wrong output!");
             player.setScore(-1);
             endGame();
         } catch (TimeoutException e) {
-            gameManager.addToGameSummary(GameManager.formatErrorMessage(player.getNicknameToken() + " timeout!"));
+            gameManager.addToGameSummary(GameManager.formatErrorMessage(player.getNicknameToken() + " did not output in time!"));
             player.deactivate(player.getNicknameToken() + " timeout!");
             player.setScore(-1);
             endGame();
         } catch (InvalidAction e) {
+            gameManager.addToGameSummary(e.getMessage());
+            gameManager.addToGameSummary(GameManager.formatErrorMessage("Action was: " + player.GetActionOutput()));
             player.deactivate(e.getMessage());
             player.setScore(-1);
             endGame();
         } catch (IndexOutOfBoundsException e) {
             gameManager.addToGameSummary(GameManager.formatErrorMessage(player.getNicknameToken() + " chose only one number!"));
+            gameManager.addToGameSummary("Action was: " + player.GetActionOutput());
             player.deactivate(player.getNicknameToken() + " chose only one number!");
             player.setScore(-1);
             endGame();

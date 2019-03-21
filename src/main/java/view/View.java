@@ -2,6 +2,8 @@ package view;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.codingame.game.Action;
 import com.codingame.game.Player;
@@ -19,6 +21,7 @@ public class View {
     private List<List<Polygon>> hexagonsList = new ArrayList<>();
     private static Text[] moves = new Text[2];
     private List<List<Line>> tempLines = new ArrayList<>();
+    private static Text message;
 
     private Polygon createHex(GraphicEntityModule graphics, double radius, int centerX, int centerY, int row) {
         Polygon hex = graphics.createPolygon();
@@ -98,6 +101,17 @@ public class View {
     private void DrawPlayers(GraphicEntityModule graphics, List<Player> players) {
         DrawPlayer(graphics, players.get(0));
         DrawPlayer(graphics, players.get(1));
+    }
+
+    public void DrawMessage(GraphicEntityModule graphics, Player player) {
+        if(player.GetMessage() != null) {
+            message = graphics.createText(player.GetMessage()).setFontSize(30);
+            if(player.getIndex() == 0) {
+                message.setX(50).setY(400);
+            } else {
+                message.setX(1500).setY(400);
+            }
+        }
     }
 
     public void PaintSquare(GraphicEntityModule graphics, Action action) {
