@@ -1,29 +1,32 @@
 <div style="color:#18d8b8;background-color:rgba(187, 135, 87, 0.1);padding:20px;margin-right:15px;margin-left:15px;margin-bottom:10px;text-align:left">This is a port from the board game <a href="http://cambolbro.com/games/yavalath/">Yavalath</a></div>
 <div class="statement-body">
-<!-- GOAL -->
-<div class="statement-section statement-goal">
-    <h1>
-        <span class="icon icon-goal">&nbsp;</span>
-        <span>The Goal</span>
-    </h1>
-    <div class="statement-goal-content">
-        The goal of the game is to make a line of 4 without making a line of 3 beforehand.<br>
-        Click <a href="http://cambolbro.com/games/yavalath/">here</a> or <a href="https://boardgamegeek.com/blogpost/2814/yavalath-evolutionary-game-design">here</a> for more detailed rules.
-        <br>
+    <!-- GOAL -->
+    <div class="statement-section statement-goal">
+        <h1>
+            <span class="icon icon-goal">&nbsp;</span>
+            <span>The Goal</span>
+        </h1>
+        <div class="statement-goal-content">
+            The goal of the game is to make a line of 4 without making a line of 3 beforehand.<br>
+            Click <a href="http://cambolbro.com/games/yavalath/">here</a> or <a href="https://boardgamegeek.com/blogpost/2814/yavalath-evolutionary-game-design">here</a> for more detailed rules.
+            <br>
+        </div>
     </div>
-</div>
-<!-- RULES -->
-<div class="statement-section statement-rules">
-    <h1>
-        <span class="icon icon-rules">&nbsp;</span>
-        <span>Rules</span>
-    </h1>
-    <div>
+
+    <!-- RULES -->
+    <div class="statement-section statement-rules">
+        <h1>
+            <span class="icon icon-rules">&nbsp;</span>
+            <span>Rules</span>
+        </h1>
         <div class="statement-rules-content">
             <strong>Grid: </strong><br> Game is played on an hex grid. Grid size will always remain the same.<br><br>
+            <strong>The grid coordinates are represented in the image below:</strong>
+            <p style="text-align: center;"><img src="https://i.imgur.com/WhlmAmX.png" style="height: 250px; width: auto;"></img></p>
+            <br><br>
 
-            <strong>Resolution of a turn: </strong><br> A bot must output the coordinates of the hexagon that he wants to play. Once the output is done, the hexagon at those coordinates will be filled.<br><br>
-            <strong>Output</strong><br> If the coordinates:
+            <strong>Resolution of a turn: </strong><br><br> A bot must output the coordinates of the hexagon that he wants to play. Once the output is done, the hexagon at those coordinates will be filled.<br><br><br>
+            <strong>Output</strong><br><br> If the coordinates:
             <ul>
                 <li>Are outside of Hex grid, the game will end and the other player will win.</li>
                 <li>Are inside but the hexagon at those coordinates is already filled, the game will end and the other player will win (exception if is player 2 first turn, see expert rules).</li>
@@ -32,6 +35,7 @@
             </ul>
         </div>
     </div>
+
     <!-- EXPERT RULES -->
     <div class="statement-section statement-expertrules">
         <h1>
@@ -39,10 +43,65 @@
             <span>Expert Rules</span>
         </h1>
         <div class="statement-expert-rules-content">
-            On player 2 first turn, he has a choice to either play normally or to replace opponent first move with his own(steal player 1 first move), this will replace the hexagon color by your color.<br>
+            On player 2 first turn, he has a choice to either play normally or to replace opponent first move with his own(steal player 1 first move), this will replace the hexagon color by your color.<br><br>
             Github repo can be found <a href="https://github.com/MultiStruct/Yavalath/">here</a>.
         </div>
     </div>
+
+    <!-- EXAMPLES -->
+    <div class="statement-section statement-examples">
+        <h1>
+            <span class="icon icon-example">&nbsp;</span>
+            <span>Examples</span>
+        </h1>
+
+        <div class="statement-examples-text">
+            <div class="first-example"><strong>What is a line</strong></div><br>
+            <strong>The image below just all possible directions that you can make a line:</strong>
+            <p style="text-align: center;"><img src="https://i.imgur.com/mgHE9eE.png" style="height: 250px; width: auto;"></img></p>
+            <ul>
+                <li>Red line: Represents a line of 4</li>
+                <li>Green line: Represents a line of 3</li>
+                <li>Blue line: Represents a line of 2</li>
+                <li>Black line: Represents a line of 3</li>
+                <li>Pink line: Represents a line of 4</li>
+                <li>Yellow line: Represents a line of 4</li>
+            </ul>
+            
+            <div class="first-example"><strong>What is a winning move</strong></div><br>
+            <strong>The image bellow shows how to win a game:</strong>
+            <p style="text-align: center;"><img src="https://i.imgur.com/jzNJvLx.png" style="height: auto; width: 500px;"></img></p>
+            <ul>
+                <li>(2,2): Creates a line of 4 { (0,0), (1,1), (2,2), (3,3) }</li>
+                <li>(4,2): Creates a line of 4 { (4,3), (4,2), (4,1), (4,0) }</li>
+                <li>(5,3): Creates a line of 5 { (3,3), (4,3), (5,3), (6,3), (7,3) }</li>
+                <li>(5,4): Creates a line of 4 { (3,2), (4,3), (5,4), (5,5) }</li>
+                <li>(4,4): Creates a line of 4 { (4,3), (4,4), (3,5), (2,6) }</li>
+                <li>(2,3): Creates a line of 4 { (4,3), (3,3), (2,3), (1,3) } and also creates a line of 3 { (2,3), (2,4), (1,5) } but, since both lines were made one same turn the player wins.</li>
+            </ul>
+
+            <div class="first-example"><strong>What is a loosing move</strong></div><br>
+            <strong>The image bellow shows how to loose a game:</strong>
+            <p style="text-align: center;"><img src="https://i.imgur.com/wEVZTCz.png" style="height: auto; width: 500px;"></img></p>
+            <ul>
+                <li>(2,3): Creates a line of 3 { (2,3), (3,3), (4,3) }</li>
+                <li>(2,2): Creates a line of 3 { (2,2), (3,3), (4,4) }</li>
+                <li>(4,2): Creates a line of 3 { (4,2), (4,3), (4,4) }</li>
+                <li>(4,5): Creates a line of 3 { (3,3), (4,4), (4,5) }</li>
+                <li>(3,4): Creates a line of 3 { (3,3), (3,4), (2,5) }</li>
+                <li>(0,6): Plays a move on occupied cell, the other player wins.</li>
+            </ul>
+
+            <div class="first-example"><strong>What is a steal</strong></div><br>
+            <strong>On player 2 first turn, he has the opportunity to play on the square the opponent played, and be the owner of it, the image below shows this:</strong>
+            <p style="text-align: center;"><img src="https://i.imgur.com/QemBt4S.png" style="height: auto; width: 500px;"></img></p>
+            <ul>
+                <li>(4,4): Player 1 plays on (4,4)</li>
+                <li>(4,4): Player 2 decides to steal his move</li>
+            </ul>
+        </div>
+    </div><br>
+
     <!-- Victory conditions -->
     <div class="statement-victory-conditions">
         <div class="icon victory"></div>
@@ -51,12 +110,13 @@
             <div class="text">
                 <ul style="padding-bottom: 0;">
                     <li>
-                        Make a line of 4 before making a line of 3 beforehand.
+                    Make a line of 4 before making a line of 3 beforehand.
                     </li>
                 </ul>
             </div>
         </div>
     </div>
+
     <!-- Lose conditions -->
     <div class="statement-lose-conditions">
         <div class="icon lose"></div>
@@ -65,10 +125,10 @@
             <div class="text">
                 <ul style="padding-bottom: 0;">
                     <li>
-                        Make a line of 3.
+                    Make a line of 3 colored hexes of same color.
                     </li>
                     <li>
-                        You do not respond in time or output an unrecognized command.
+                    You do not respond in time or output an unrecognized command.
                     </li>
                 </ul>
             </div>
@@ -78,45 +138,45 @@
     <!-- PROTOCOL -->
     <div class="statement-section statement-protocol">
         <h1>
-            <span class="icon icon-protocol">&nbsp;</span>
-            <span>Game Input</span>
-        </h1>
+        <span class="icon icon-protocol">&nbsp;</span>
+        <span>Game Input</span>
+    </h1>
 
-        <!-- Protocol block -->
-        <div class="blk">
-            <div class="title">Initial input</div>
-            <div class="text">
-                <span class="statement-lineno">First line</span>: The id of the player(<var>myId</var>)
-            </div>
-            <div class="title">Input for one game turn</div>
-            <div class="text">
-                <span class="statement-lineno">First line</span>: <var>count</var>: the number of rows on hex grid.
-                <br>
-                <span class="statement-lineno">Next <var>count</var> lines</span>: each row of the grid as a string (0: empty, 1: yours, 2: opponent).
-                <br>
-                <span class="statement-lineno">Next <var>opponentX</var></span>: the x coordinate of opponent move.
-                <br>
-                <span class="statement-lineno">Next <var>opponentY</var></span>: the y coordinate of opponent move.
-                <br>
-            </div>
+    <!-- Protocol block -->
+    <div class="blk">
+        <div class="title">Initial input</div>
+        <div class="text">
+            <span class="statement-lineno">First line</span>: The id of the player(<var>myId</var>)
         </div>
-
-        <!-- Protocol block -->
-        <div class="blk">
-            <div class="title">Output</div>
-            <div class="text">
-                <span class="statement-lineno">A single line</span> containing the coordinates you want to play. Example "4 4".
-                <br>
-            </div>
+        <div class="title">Input for one game turn</div>
+        <div class="text">
+            <span class="statement-lineno">First line</span>: <var>count</var>: the number of rows on hex grid.
+            <br>
+            <span class="statement-lineno">Next <var>count</var> lines</span>: characters representing one line of your grid, top to bottom. (0: empty, 1: yours, 2: opponent).
+            <br>
+            <span class="statement-lineno">Next <var>opponentX</var></span>: the x coordinate of opponent move.
+            <br>
+            <span class="statement-lineno">Next <var>opponentY</var></span>: the y coordinate of opponent move.
+            <br>
         </div>
+    </div>
 
-        <!-- Protocol block -->
-        <div class="blk">
-            <div class="title">Constraints</div>
-            Response time first turn is ≤
-            <const>1000</const> ms.
-            <br>Response time per turn is ≤
-            <const>100</const> ms.
+    <!-- Protocol block -->
+    <div class="blk">
+        <div class="title">Output</div>
+        <div class="text">
+            <span class="statement-lineno">A single line</span> containing the coordinates you want to play. Example "4 4".
+        <br>
+        </div>
+    </div>
+
+    <!-- Protocol block -->
+    <div class="blk">
+        <div class="title">Constraints</div>
+        Response time first turn is ≤
+        <const>1000</const> ms.
+        <br>Response time per turn is ≤
+        <const>100</const> ms.
         </div>
     </div>
 </div>

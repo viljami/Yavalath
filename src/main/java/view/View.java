@@ -77,7 +77,7 @@ public class View {
         graphics.createText(player.getNicknameToken())
                 .setX(centerX - 50)
                 .setY(50)
-                .setFontSize(40).setFontFamily("Roboto").setFontWeight(Text.FontWeight.BOLD);
+                .setFontSize(40).setFontWeight(Text.FontWeight.BOLD);
 
         graphics.createSprite()
                 .setImage(player.getAvatarToken())
@@ -86,12 +86,13 @@ public class View {
                 .setBaseWidth(200)
                 .setBaseHeight(200);
 
+
         Polygon poly = createHex(graphics, 200, 103 + centerX, 800, 0);
         poly.setFillColor(player.getColorToken()).setZIndex(1).setLineWidth(0);
         Polygon poly2 = createHex(graphics, 210, 103 + centerX, 800, 0);
         poly2.setFillColor(0x000000).setZIndex(0).setLineWidth(0);
 
-        moves[player.getIndex()] = graphics.createText("").setY(722).setX(centerX-12).setZIndex(2).setFontSize(150).setFontWeight(Text.FontWeight.BOLD);
+        moves[player.getIndex()] = graphics.createText("").setY(722).setX(centerX-12).setZIndex(2).setFontSize(150);
     }
 
     private void DrawPlayers(GraphicEntityModule graphics, List<Player> players) {
