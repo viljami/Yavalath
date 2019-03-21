@@ -20,15 +20,16 @@ public class View {
 
     private List<List<Polygon>> hexagonsList = new ArrayList<>();
     private static Text[] moves = new Text[2];
+    // Needed to add this because some people had bug rendering hexagons.
     private List<List<Line>> tempLines = new ArrayList<>();
-    private static Text message;
+    private static Text[] messageTexts = new Text[10];
 
-    private Polygon createHex(GraphicEntityModule graphics, double radius, int centerX, int centerY, int row) {
+    private Polygon createHex(GraphicEntityModule graphics, double radius, int centerX, int centerY, int row, int d) {
         Polygon hex = graphics.createPolygon();
         // Creates HexGrid
         for (int i = 0; i < 6; i++) {
-            int x = (int)(radius * 1.75 * row + centerX + radius * Math.cos((1 + i * 2) * Math.PI / 6D));
-            int y = (int)(centerY + radius * Math.sin((1 + i * 2) * Math.PI / 6D));
+            int x = (int)(radius * 1.75 * row + centerX + radius * Math.cos((d + i * 2) * Math.PI / 6D));
+            int y = (int)(centerY + radius * Math.sin((d + i * 2) * Math.PI / 6D));
             hex.addPoint(x, y);
         }
         hex.setFillColor(0xE7BA7B).setLineWidth(5).setLineColor(0x000000).setZIndex(0);
@@ -37,7 +38,7 @@ public class View {
     };
 
     public View(GraphicEntityModule graphics, TooltipModule tooltips, ToggleModule toggle, List<Player> players) {
-        graphics.createRectangle().setWidth(WIDTH).setHeight(HEIGHT).setFillColor(0xababab);
+        graphics.createRectangle().setWidth(WIDTH).setHeight(HEIGHT).setFillColor(0xababab).setZIndex(-2);
 
         Group texts = graphics.createGroup();
         texts.setZIndex(2);
@@ -47,14 +48,15 @@ public class View {
         int centerY = 150;
         int counter = 5;
 
+
         // Generates hex grid
         for(int h = 0; h < 9; ++h) {
             hexagonsList.add(h, new ArrayList<>());
             tempLines.add(h, new ArrayList<>());
             for(int c = 0; c < counter; ++c) {
-                hexagonsList.get(h).add(c, createHex(graphics, radius, centerX, centerY, c));
+                hexagonsList.get(h).add(c, createHex(graphics, radius, centerX, centerY, c, 1));
                 tooltips.setTooltipText(hexagonsList.get(h).get(c), c + " " + h);
-                texts.add(graphics.createText(c + "  " + h).setX(centerX + (int)(radius * 1.75 * c) - 32).setY(centerY - 20).setFontSize(40));
+                texts.add(graphics.createText(c + "  " + h).setX(centerX + (int)(radius * 1.75 * c)).setY(centerY).setAnchorX(0.5).setAnchorY(0.5).setFontSize(40));
                 tempLines.get(h).add(graphics.createLine().setX(centerX + 56 + (int)(radius * 1.75 * c)).setX2(centerX + 56 + (int)(radius * 1.75 * c)).setY(centerY - 33).setY2(centerY + 32).setLineColor(0x000000).setZIndex(5).setLineWidth(5));
             }
             if(h < 4) {
@@ -72,30 +74,41 @@ public class View {
     }
 
     private void DrawPlayer(GraphicEntityModule graphics, Player player) {
-        int centerX = 172;
+        // Borders
+        int centerX = 145;
         if(player.getIndex() == 1) {
             centerX = 1542;
         }
 
-        graphics.createText(player.getNicknameToken())
-                .setX(centerX - 50)
-                .setY(50)
-                .setFontSize(40).setFontWeight(Text.FontWeight.BOLD);
+        createHex(graphics, 225, centerX + 105, 280, 0, 0).setZIndex(-1).setAlpha(0.5);
+        createHex(graphics, 131, centerX + 105, 540, 0, 1).setZIndex(0).setFillColor(player.getColorToken());
+        createHex(graphics, 225, centerX + 105, 800, 0, 0).setZIndex(-1).setAlpha(0.5);
+
+
+        String name = player.getNicknameToken();
+        if(name.length() > 13) {
+            name = name.substring(0,13);
+        }
+        graphics.createText(name)
+                .setX(centerX + 100)
+                .setAnchorX(0.5)
+                .setY(115)
+                .setFontSize(43)
+                .setFontWeight(Text.FontWeight.BOLD)
+                .setFontFamily("Calibri")
+                .setFillColor(player.getColorToken());
 
         graphics.createSprite()
                 .setImage(player.getAvatarToken())
                 .setX(centerX)
-                .setY(130)
+                .setY(180)
                 .setBaseWidth(200)
                 .setBaseHeight(200);
 
-
-        Polygon poly = createHex(graphics, 200, 103 + centerX, 800, 0);
-        poly.setFillColor(player.getColorToken()).setZIndex(1).setLineWidth(0);
-        Polygon poly2 = createHex(graphics, 210, 103 + centerX, 800, 0);
-        poly2.setFillColor(0x000000).setZIndex(0).setLineWidth(0);
-
-        moves[player.getIndex()] = graphics.createText("").setY(722).setX(centerX-12).setZIndex(2).setFontSize(150);
+        for(int i = 0; i < 10; ++i) {
+            messageTexts[i] = graphics.createText("").setZIndex(2).setFontFamily("Calibri").setFontSize(30).setY(680 + i * 30);
+        }
+        moves[player.getIndex()] = graphics.createText("").setY(487).setX(centerX + 32).setZIndex(2).setFontSize(100).setFontFamily("Calibri");
     }
 
     private void DrawPlayers(GraphicEntityModule graphics, List<Player> players) {
@@ -104,12 +117,21 @@ public class View {
     }
 
     public void DrawMessage(GraphicEntityModule graphics, Player player) {
+
         if(player.GetMessage() != null) {
-            message = graphics.createText(player.GetMessage()).setFontSize(30);
-            if(player.getIndex() == 0) {
-                message.setX(50).setY(400);
-            } else {
-                message.setX(1500).setY(400);
+            String[] messages = player.GetMessage().split("/");
+            int numberOfMessages = messages.length;
+            for(int i = 0; i < numberOfMessages; ++i) {
+                if(messages[i].length() > 22) {
+                    messageTexts[i].setText(messages[i].substring(0, 22));
+                } else {
+                    messageTexts[i].setText(messages[i]);
+                }
+                if(player.getIndex() == 0) {
+                    messageTexts[i].setX(125);
+                } else {
+                    messageTexts[i].setX(1522);
+                }
             }
         }
     }

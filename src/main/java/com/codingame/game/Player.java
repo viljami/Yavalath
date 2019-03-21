@@ -23,7 +23,7 @@ public class Player extends AbstractMultiplayerPlayer {
     }
 
     public String GetMessage() {
-        String message = "";
+        String message = null;
 
         if(output.length > 2) {
             message = Arrays.stream(output).skip(2).collect(Collectors.joining(" "));

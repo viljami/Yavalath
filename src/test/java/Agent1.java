@@ -57,7 +57,7 @@ public class Agent1 {
             int r = (int)(Math.random() * actions.size());
 
             hexagons.get(actions.get(r).col).set(actions.get(r).row, 1);
-            System.out.println(actions.get(r).row + " " + actions.get(r).col);
+            System.out.println(actions.get(r).row + " " + actions.get(r).col + " This is a message/This is another message/Just one more/This is another message/Just one more/This is another message/Just one more/This is another message/Just one more");
         }
     }
 }

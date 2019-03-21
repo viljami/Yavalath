@@ -49,9 +49,9 @@ public class Referee extends AbstractReferee {
 
             if(!validActions.contains(action)) {
                 if(action.row >= 0 && action.col >= 0 && action.col <= 8 && action.row < hexGrid.hexagons.get(action.col).size()) {
-                    throw new InvalidAction(String.format("Player %s played an illegal action (%d %d). Cell was occupied.", action.player.getNicknameToken(), action.row, action.col));
+                    throw new InvalidAction(String.format("Player %s played an illegal action (cell was occupied).", action.player.getNicknameToken(), action.row, action.col));
                 } else {
-                    throw new InvalidAction(String.format("Player %s played an illegal action (%d %d). Out of bounds move.", action.player.getNicknameToken(), action.row, action.col));
+                    throw new InvalidAction(String.format("Player %s played an illegal action (out of bounds move).", action.player.getNicknameToken(), action.row, action.col));
                 }
             } else {
                 gameManager.addToGameSummary(String.format("Player %s played (%d %d).", action.player.getNicknameToken(), action.row, action.col));
