@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Agent2 {
-    public static List<List<Integer>> hexagons = new ArrayList<>();
+    private static List<List<Integer>> hexagons = new ArrayList<>();
 
-    public static void setHexagons() {
+    private static void setHexagons() {
         int counter = 5;
         for(int h = 0; h < 9; ++h) {
             for(int c = 0; c < counter; ++c) {
@@ -22,7 +22,7 @@ public class Agent2 {
         }
     };
 
-    public static List<Action> getValidActions() {
+    private static List<Action> getValidActions() {
         List<Action> validActions;
         validActions = new ArrayList<>();
         for(int h = 0; h < 9; ++h) {
@@ -56,7 +56,6 @@ public class Agent2 {
             List<Action> actions = getValidActions();
             int r = (int)(Math.random() * actions.size());
 
-            hexagons.get(actions.get(r).col).set(actions.get(r).row, 1);
             System.out.println(actions.get(r).row + " " + actions.get(r).col);
         }
     }

@@ -30,8 +30,8 @@
             <ul>
                 <li>Are outside of Hex grid, the game will end and the other player will win.</li>
                 <li>Are inside but the hexagon at those coordinates is already filled, the game will end and the other player will win (exception if is player 2 first turn, see expert rules).</li>
-                <li>If those coordinates result in a line of 4, than the player win.</li>
-                <li>If those coordinates result in a line of 3, than the other player win.</li>
+                <li>If those coordinates result in a line of 4, then the player win.</li>
+                <li>If those coordinates result in a line of 3, then the other player win.</li>
             </ul>
         </div>
     </div>
@@ -57,10 +57,10 @@
 
         <div class="statement-examples-text">
             <div class="first-example"><strong>What is a line</strong></div><br>
-            <strong>The image below just all possible directions that you can make a line:</strong>
-            <p style="text-align: center;"><img src="https://i.imgur.com/mgHE9eE.png" style="height: 250px; width: auto;"></img></p>
+            <strong>The image below shows all possible directions that you can make a line:</strong>
+            <p style="text-align: center;"><img src="https://i.imgur.com/24dwfx6.png" style="height: 250px; width: auto;"></img></p>
             <ul>
-                <li>#ff1d5c line: Represents a line of 4</li>
+                <li>Red line: Represents a line of 4</li>
                 <li>Green line: Represents a line of 3</li>
                 <li>Blue line: Represents a line of 2</li>
                 <li>Black line: Represents a line of 3</li>
@@ -69,7 +69,7 @@
             </ul>
             
             <div class="first-example"><strong>What is a winning move</strong></div><br>
-            <strong>The image bellow shows how to win a game:</strong>
+            <strong>The image below shows how to win a game:</strong>
             <p style="text-align: center;"><img src="https://i.imgur.com/jzNJvLx.png" style="height: auto; width: 500px;"></img></p>
             <ul>
                 <li><strong style="color:#ff1d5c">(2,2)</strong>: Creates a line of 4 { <strong style="color:#ff1d5c">(0,0), (1,1), (2,2), (3,3)</strong> }</li>
@@ -80,8 +80,8 @@
                 <li><strong style="color:#ff1d5c">(2,3)</strong>: Creates a line of 4 { <strong style="color:#ff1d5c">(4,3), (3,3), (2,3), (1,3)</strong> } and also creates a line of 3 { <strong style="color:#ff1d5c">(2,3), (2,4), (1,5)</strong> } but, since both lines were made one same turn the player wins.</li>
             </ul>
 
-            <div class="first-example"><strong>What is a loosing move</strong></div><br>
-            <strong>The image bellow shows how to loose a game:</strong>
+            <div class="first-example"><strong>What is a losing move</strong></div><br>
+            <strong>The image below shows how to lose a game:</strong>
             <p style="text-align: center;"><img src="https://i.imgur.com/wEVZTCz.png" style="height: auto; width: 500px;"></img></p>
             <ul>
                 <li><strong style="color:#ff1d5c">(2,3)</strong>: Creates a line of 3 { <strong style="color:#ff1d5c">(2,3), (3,3), (4,3)</strong> }</li>
@@ -96,8 +96,8 @@
             <strong>On player 2 first turn, he has the opportunity to play on the square the opponent played, and be the owner of it, the image below shows this:</strong>
             <p style="text-align: center;"><img src="https://i.imgur.com/QemBt4S.png" style="height: auto; width: 500px;"></img></p>
             <ul>
-                <li><strong style="color:#ff1d5c">(4,4)</strong>: Firt player plays on <strong style="color:#ff1d5c">(4,4)</strong></li>
-                <li><strong style="color:#22a1e4">(4,4)</strong>: Second decides to steal his move</li>
+                <li><strong style="color:#ff1d5c">(4,4)</strong>: First player plays on <strong style="color:#ff1d5c">(4,4)</strong></li>
+                <li><strong style="color:#22a1e4">(4,4)</strong>: Second decides to steal his move and also plays on <strong style="color:#22a1e4">(4,4)</strong></li>
             </ul>
         </div>
     </div><br>
@@ -154,9 +154,9 @@
             <br>
             <span class="statement-lineno">Next <var>count</var> lines</span>: characters representing one line of your grid, top to bottom. (0: empty, 1: yours, 2: opponent).
             <br>
-            <span class="statement-lineno">Next <var>opponentX</var></span>: the x coordinate of opponent move.
+            <span class="statement-lineno">Next <var>opponentX</var></span>: the x coordinate of opponent move (-1 on first turn for first player).
             <br>
-            <span class="statement-lineno">Next <var>opponentY</var></span>: the y coordinate of opponent move.
+            <span class="statement-lineno">Next <var>opponentY</var></span>: the y coordinate of opponent move (-1 on first turn for first player).
             <br>
         </div>
     </div>
@@ -165,7 +165,8 @@
     <div class="blk">
         <div class="title">Output</div>
         <div class="text">
-            <span class="statement-lineno">A single line</span> containing the coordinates you want to play. Example "4 4".
+            <span class="statement-lineno">A single line</span> containing the coordinates you want to play. Example "4 4".<br>
+            You can also print messages by doing the following. Example: "4 4 This is a message/This is another message". The "/" will create a new line between messages.
         <br>
         </div>
     </div>

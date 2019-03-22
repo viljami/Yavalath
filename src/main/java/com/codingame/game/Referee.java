@@ -14,10 +14,8 @@ import view.View;
 import view.toggle.ToggleModule;
 
 public class Referee extends AbstractReferee {
-
     @Inject private MultiplayerGameManager<Player> gameManager;
     @Inject private GraphicEntityModule graphicEntityModule;
-
     @Inject private TooltipModule tooltips;
     @Inject private ToggleModule toggleModule;
     @Inject private EndScreenModule endScreenModule;
@@ -42,16 +40,16 @@ public class Referee extends AbstractReferee {
             final Action action = player.getAction();
             List<Action> validActions = hexGrid.getValidActions();
 
-            view.DrawMessage(graphicEntityModule, player);
+            view.DrawMessage(player);
 
             if(turn == 1)
                 validActions.add(lastAction);
 
             if(!validActions.contains(action)) {
                 if(action.row >= 0 && action.col >= 0 && action.col <= 8 && action.row < hexGrid.hexagons.get(action.col).size()) {
-                    throw new InvalidAction(String.format("Player %s played an illegal action (cell was occupied).", action.player.getNicknameToken(), action.row, action.col));
+                    throw new InvalidAction(String.format("Player %s played an illegal action (cell was occupied).", action.player.getNicknameToken()));
                 } else {
-                    throw new InvalidAction(String.format("Player %s played an illegal action (out of bounds move).", action.player.getNicknameToken(), action.row, action.col));
+                    throw new InvalidAction(String.format("Player %s played an illegal action (out of bounds move).", action.player.getNicknameToken()));
                 }
             } else {
                 gameManager.addToGameSummary(String.format("Player %s played (%d %d).", action.player.getNicknameToken(), action.row, action.col));
@@ -59,21 +57,22 @@ public class Referee extends AbstractReferee {
 
             lastAction = action;
             int result = hexGrid.MakeAction(action, player);
-            if(result >= 4) { // Player wins
+            if(result >= 4) { // Check if player won
                 gameManager.addToGameSummary(String.format("Player %s has made a line of 4.", action.player.getNicknameToken()));
                 gameManager.addTooltip(action.player, player.getNicknameToken() + " made a line of 4");
                 setWinner(player);
-            } else if(result == 3) { // Player looses
+            } else if(result == 3) { // Check if player lost
                 gameManager.addToGameSummary(String.format("Player %s has made a line of 3.", action.player.getNicknameToken()));
                 gameManager.addTooltip(action.player, player.getNicknameToken() + " made a line of 3");
                 setWinner(gameManager.getPlayer((turn+1) % gameManager.getPlayerCount()));
             } else {
-                view.PaintSquare(graphicEntityModule, action);
+                view.PaintSquare(action);
             }
 
             validActions = hexGrid.getValidActions();
 
-            if(validActions.size() == 0) {
+            // Checks for tie
+            if(validActions.size() == 0 && result < 3) {
                 gameManager.addToGameSummary(GameManager.formatErrorMessage("No more moves, it's a tie!"));
                 gameManager.addTooltip(gameManager.getPlayer(0), "tie");
                 gameManager.addTooltip(gameManager.getPlayer(1), "tie");
@@ -152,7 +151,7 @@ public class Referee extends AbstractReferee {
     }
 
     private void endGame() {
-        view.EndGameView(graphicEntityModule, lastAction, gameManager, getWinner(), hexGrid.CheckNeighbours(lastAction));
+        view.EndGameView(lastAction, gameManager, getWinner(), hexGrid.CheckNeighbours(lastAction));
         gameManager.endGame();
     }
 
