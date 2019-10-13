@@ -6,8 +6,8 @@ public class Main {
     public static void main(String[] args) {
         MultiplayerGameRunner gameRunner = new MultiplayerGameRunner();
 
-        gameRunner.addAgent(Boss1.class);
-        gameRunner.addAgent(Boss1.class);
+        gameRunner.addAgent("python3 ../agent1.py", "Player 1");
+        gameRunner.addAgent("python3 ../agent2.py", "Player 2");
 
         gameRunner.start();
     }
